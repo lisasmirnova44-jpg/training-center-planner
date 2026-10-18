@@ -28,7 +28,24 @@ const statuses=['Новый кандидат','Собеседование наз
 const interviewStatuses=['Запланировано','Состоялось','Перенесено','Не пришёл','Отменено'];
 const taskStatuses=['Не начато','В процессе','Выполнено','Пропуск'];
 let state=load(),view='dashboard',editingId=null;let calendarMonth=new Date(new Date().getFullYear(),new Date().getMonth(),1);
-function load(){try{const x=JSON.parse(localStorage.getItem(KEY)||'{}');return {candidates:Array.isArray(x.candidates)?x.candidates:[],interviews:Array.isArray(x.interviews)?x.interviews:[],blockedDates:Array.isArray(x.blockedDates)?x.blockedDates:[]}}catch(e){return {candidates:[],interviews:[],blockedDates:[]}}}
+
+function load(){
+  try {
+    const x = JSON.parse(localStorage.getItem(KEY) || '{}');
+    return {
+      candidates: Array.isArray(x.candidates) ? x.candidates : [],
+      interviews: Array.isArray(x.interviews) ? x.interviews : [],
+      blockedDates: Array.isArray(x.blockedDates) ? x.blockedDates : []
+    };
+  } catch(e) {
+    return {
+      candidates: [],
+      interviews: [],
+      blockedDates: []
+    };
+  }
+}
+
 function save(){localStorage.setItem(KEY,JSON.stringify(state));render()}
 function uid(){return 'c'+Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
